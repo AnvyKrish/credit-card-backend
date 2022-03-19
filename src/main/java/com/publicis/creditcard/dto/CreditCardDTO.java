@@ -8,9 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreditCardDTO implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer creditCardID;
 	private String name;
 	private String cardNumber;

@@ -2,7 +2,6 @@ package com.publicis.creditcard.controller;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,11 +28,12 @@ public class CreditCardController {
 	private final CreditCardService creditCardService;
 
 	@RequestMapping(value = "/v1/addCard", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseDTO<CreditCardDTO>> addCard(@RequestBody CreditCardDTO creditCardDTO) throws InvalidCardException {
+	public ResponseEntity<ResponseDTO<List<CreditCardDTO>>> addCard(@RequestBody CreditCardDTO creditCardDTO)
+			throws InvalidCardException {
 		log.info("<<<<<<addCard CreditCardController >>>>>>");
-		 ResponseDTO<CreditCardDTO> creditCardRespDTO = creditCardService.addCreditCard(creditCardDTO);
+		ResponseDTO<List<CreditCardDTO>> creditCardRespDTO = creditCardService.addCreditCard(creditCardDTO);
 		if (creditCardRespDTO.getStatusMsg().equals(StatusEnum.SUCCESS.getStatus())) {
-			return new ResponseEntity<ResponseDTO<CreditCardDTO>>(creditCardRespDTO, HttpStatus.OK);
+			return ResponseEntity.ok(creditCardRespDTO);
 		} else {
 			throw new InvalidCardException();
 		}
@@ -43,10 +43,10 @@ public class CreditCardController {
 	public ResponseEntity<ResponseDTO<List<CreditCardDTO>>> getAllCards() throws NotFoundException {
 		log.info("<<<<<<getAllCards CreditCardController >>>>>>");
 		ResponseDTO<List<CreditCardDTO>> creditCardRespDTO = creditCardService.getAllCards();
-		if(creditCardRespDTO.getData()!= null && creditCardRespDTO.getData().size()>0) {
+		if (creditCardRespDTO.getData() != null && creditCardRespDTO.getData().size() > 0) {
 			return ResponseEntity.ok(creditCardRespDTO);
-		}else {
-			throw new  NotFoundException();
+		} else {
+			throw new NotFoundException();
 		}
 	}
 }
