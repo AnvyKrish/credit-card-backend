@@ -9,7 +9,7 @@ import com.publicis.creditcard.utilities.ResponseDTO;
 
 public interface CreditCardService {
 
-	ResponseDTO<CreditCardDTO> addCreditCard(CreditCardDTO creditCardDTO) throws InvalidCardException;
+	ResponseDTO<List<CreditCardDTO>> addCreditCard(CreditCardDTO creditCardDTO) throws InvalidCardException;
 
 	ResponseDTO<List<CreditCardDTO>> getAllCards() throws NotFoundException;
 }

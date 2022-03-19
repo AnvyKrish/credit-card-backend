@@ -27,12 +27,15 @@ public class CreditCardServiceImpl implements CreditCardService {
 	private final CreditCardRepository creditCardRepo;
 
 	@Override
-	public ResponseDTO<CreditCardDTO> addCreditCard(CreditCardDTO creditCardDTO) throws InvalidCardException {
+	public ResponseDTO<List<CreditCardDTO>> addCreditCard(CreditCardDTO creditCardDTO) throws InvalidCardException {
 		log.info("<<<<<<addCard CreditCardServiceImpl >>>>>>");
-		 if (creditCardDTO.getCardNumber() != null && validateCreditCard(creditCardDTO.getCardNumber())) {
+		if (creditCardDTO.getCardNumber() != null && validateCreditCard(creditCardDTO.getCardNumber())) {
 			CreditCard creditCard = creditCardMapper.creditCardDTOToCreditCard(creditCardDTO);
 			creditCardRepo.save(creditCard);
-			return new ResponseDTO<>(null, StatusEnum.SUCCESS, CreditCardConstants.SUCCESS_CODE);
+			List<CreditCard> ccList = creditCardRepo.findAll();
+			List<CreditCardDTO> newCCList = creditCardMapper.creditCardToCreditCardDTOs(ccList);
+			return new ResponseDTO<List<CreditCardDTO>>(newCCList, StatusEnum.SUCCESS,
+					CreditCardConstants.SUCCESS_CODE);
 		} else {
 			throw new InvalidCardException();
 		}
@@ -40,7 +43,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 	}
 
 	private boolean validateCreditCard(String cardNo) {
-		if(cardNo.length()>19) {
+		if (cardNo.length() > 19) {
 			return false;
 		}
 		int nDigits = cardNo.length();

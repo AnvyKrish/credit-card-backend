@@ -11,5 +11,4 @@ import com.publicis.creditcard.entity.CreditCard;
 public interface CreditCardRepository extends JpaRepository<CreditCard, Integer>{
 	
 	List<CreditCard> findAll();
-
 }
