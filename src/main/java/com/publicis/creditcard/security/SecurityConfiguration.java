@@ -1,17 +1,20 @@
 package com.publicis.creditcard.security;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.web.reactive.config.CorsRegistry;
 
 import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableAspectJAutoProxy
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
@@ -37,5 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			web.ignoring().antMatchers("/h2-console/**");
 			 web.ignoring().antMatchers(AUTH_WHITELIST);
 	}
+	
+	 public void addCorsMappings(CorsRegistry registry) {
+		    registry.addMapping("/**").allowedOrigins("*");
+	    }
 
 }

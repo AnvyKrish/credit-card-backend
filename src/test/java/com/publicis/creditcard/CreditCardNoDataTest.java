@@ -2,7 +2,6 @@ package com.publicis.creditcard;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,11 +16,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.publicis.creditcard.dto.CreditCardDTO;
-import com.publicis.creditcard.entity.CreditCard;
 import com.publicis.creditcard.repository.CreditCardRepository;
 import com.publicis.creditcard.service.CreditCardService;
-import com.publicis.creditcard.utilities.ResponseDTO;
 
 @ActiveProfiles("test")
 @TestConfiguration
@@ -47,9 +43,6 @@ public class CreditCardNoDataTest extends CreditCardApplicationTests {
 	@Test
 	public void no_Cards() throws Exception {
 		
-		CreditCardDTO creditCardDTO = new CreditCardDTO();
-		
-		ResponseDTO<CreditCardDTO> creditCard = null;
 		
 		String mockCCJson = "{\"statusMsg\":\"SUCCESS\",\"statusCode\":\"412\",\"data\":[{\"creditCardID\":1,\"name\":\"Anvitha123\",\"cardNumber\":\"6304219447607087665\",\"balance\":\"100000\",\"limit\":\"4546544\"}]}";
 
